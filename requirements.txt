@@ -1,6 +1,6 @@
-reportlab==4.1.0
-svglib==1.5.1
-arabic-reshaper==3.0.0
-python-bidi==0.4.2
+reportlab
+svglib
+arabic-reshaper
+python-bidi
 fpdf2
 cairosvg

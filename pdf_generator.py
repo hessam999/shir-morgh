@@ -1,7 +1,7 @@
 from fpdf import FPDF
 import arabic_reshaper
 from bidi.algorithm import get_display
-from card_generator import generate_card_image_asset
+from card_generator import draw_random_shapes_on_pdf, generate_card_image_asset
 from textwrap import wrap
 
 
@@ -65,11 +65,17 @@ def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=8):
         pdf.set_draw_color(0, 0, 0)
         pdf.rect(x, y, CARD_WIDTH, CARD_HEIGHT)
         
-        # 2. تولید و قرار دادن تصویر
-        image_asset = generate_card_image_asset()
+        # # 2. تولید و قرار دادن تصویر
+        # image_asset = generate_card_image_asset()
+        # img_x = x + (CARD_WIDTH - IMAGE_ASSET_WIDTH) / 2
+        # img_y = y + 5  # 5mm فاصله از بالای کارت
+        # pdf.image(image_asset, x=img_x, y=img_y, w=IMAGE_ASSET_WIDTH, h=IMAGE_ASSET_HEIGHT, type='PNG')
+
+        # 2. Draw random shapes instead of inserting an image
         img_x = x + (CARD_WIDTH - IMAGE_ASSET_WIDTH) / 2
         img_y = y + 5  # 5mm فاصله از بالای کارت
-        pdf.image(image_asset, x=img_x, y=img_y, w=IMAGE_ASSET_WIDTH, h=IMAGE_ASSET_HEIGHT, type='PNG')
+        draw_random_shapes_on_pdf(pdf, img_x, img_y, IMAGE_ASSET_WIDTH-5, IMAGE_ASSET_HEIGHT-5, num_shapes=5)
+        
 
         # 3. نوشتن متن
         text_y_start = img_y + IMAGE_ASSET_HEIGHT + 2 # شروع متن از زیر عکس
