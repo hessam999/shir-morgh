@@ -16,7 +16,7 @@ def generate_random_svg():
         stroke_width = random.randint(1, 4)
         opacity = random.uniform(0.6, 0.9)
         
-        shape_type = random.choice(['rect', 'circle', 'ellipse'])
+        shape_type = random.choice(['rect', 'circle', 'ellipse', 'line', 'triangle'])
 
         if shape_type == 'rect':
             x, y = random.randint(0, width // 2), random.randint(0, height // 2)
@@ -32,6 +32,21 @@ def generate_random_svg():
             cx, cy = random.randint(width // 4, 3 * width // 4), random.randint(height // 4, 3 * height // 4)
             rx, ry = random.randint(width // 8, width // 3), random.randint(height // 8, height // 3)
             shapes.append(f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}" fill="{color}" stroke="{stroke_color}" stroke-width="{stroke_width}" opacity="{opacity}"/>')
+
+        elif shape_type == 'line':
+            x1, y1 = random.randint(0, width), random.randint(0, height)
+            x2, y2 = random.randint(0, width), random.randint(0, height)
+            shapes.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke_color}" stroke-width="{stroke_width}" opacity="{opacity}"/>')
+
+        elif shape_type == 'triangle':
+            # سه نقطه برای مثلث
+            points = [
+                (random.randint(0, width), random.randint(0, height)),
+                (random.randint(0, width), random.randint(0, height)),
+                (random.randint(0, width), random.randint(0, height))
+            ]
+            points_str = " ".join(f"{x},{y}" for x, y in points)
+            shapes.append(f'<polygon points="{points_str}" fill="{color}" stroke="{stroke_color}" stroke-width="{stroke_width}" opacity="{opacity}"/>')
 
     svg_content = f'<svg width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg"><g transform="rotate({random.randint(-15, 15)} {width/2} {height/2})">{"".join(shapes)}</g></svg>'
     return svg_content
