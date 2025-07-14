@@ -56,10 +56,10 @@ def generate_card_image_asset():
     یک تصویر SVG تولید کرده و آن را به بایت‌های PNG تبدیل می‌کند تا مستقیماً در PDF استفاده شود.
     """
     svg_str = generate_random_svg()
-    # png_bytes = cairosvg.svg2png(bytestring=svg_str.encode('utf-8'))
-    # return io.BytesIO(png_bytes)
-    pdf_bytes = cairosvg.svg2pdf(bytestring=svg_str.encode('utf-8'))
-    return io.BytesIO(pdf_bytes)
+    png_bytes = cairosvg.svg2png(bytestring=svg_str.encode('utf-8'))
+    return io.BytesIO(png_bytes)
+    # pdf_bytes = cairosvg.svg2pdf(bytestring=svg_str.encode('utf-8'))
+    # return io.BytesIO(pdf_bytes)
 
 
 
