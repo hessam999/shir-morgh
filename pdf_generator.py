@@ -7,9 +7,10 @@ from textwrap import wrap
 
 # --- ثابت‌های چیدمان (بر حسب میلی‌متر) ---
 A4_WIDTH, A4_HEIGHT = 210, 297
-CARD_WIDTH, CARD_HEIGHT = 63, 88
-IMAGE_ASSET_WIDTH, IMAGE_ASSET_HEIGHT = 45, 45 # اندازه تصویر روی کارت
+CARD_WIDTH, CARD_HEIGHT = 37, 53
+IMAGE_ASSET_WIDTH, IMAGE_ASSET_HEIGHT = 22, 22 # اندازه تصویر روی کارت
 FONT_PATH = "assets/font/Vazirmatn-Regular.ttf"
+FONT_SIZE = 10
 
 def prepare_rtl_text(text):
     """متن فارسی را برای نمایش صحیح در fpdf2 آماده می‌کند."""
@@ -19,7 +20,7 @@ class PDF(FPDF):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.card_count_on_page = 0
-        self.cards_per_page = 8 # مقدار پیش‌فرض
+        self.cards_per_page = 20 # مقدار پیش‌فرض
 
     def check_page_break(self):
         """در صورت پر شدن صفحه، به صفحه جدید می‌رود."""
@@ -27,7 +28,7 @@ class PDF(FPDF):
             self.add_page()
             self.card_count_on_page = 0
 
-def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=8):
+def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=16):
     """
     با استفاده از FPDF2، کارت‌ها را مستقیماً در یک فایل PDF تولید می‌کند.
     """
@@ -78,9 +79,9 @@ def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=8):
         
 
         # 3. نوشتن متن
-        text_y_start = img_y + IMAGE_ASSET_HEIGHT + 2 # شروع متن از زیر عکس
+        text_y_start = img_y + IMAGE_ASSET_HEIGHT + 0 # شروع متن از زیر عکس
         
-        pdf.set_font('Vazir', '', 14)
+        pdf.set_font('Vazir', '', FONT_SIZE)
         
         if card_type == 'word':
             pdf.set_xy(x, text_y_start + 10) # وسط‌چین عمودی
@@ -88,7 +89,7 @@ def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=8):
         
         elif card_type == 'customer':
             # عنوان مشتری
-            pdf.set_font('Vazir', '', 11)
+            pdf.set_font('Vazir', '', FONT_SIZE-1)
             pdf.set_xy(x + 2, text_y_start)
             title = prepare_rtl_text(f"{card_data['title']}")
             pdf.multi_cell(w=CARD_WIDTH - 4, h=5, txt=title, align='C')
@@ -98,15 +99,15 @@ def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=8):
             pdf.line(x + 5, line_y, x + CARD_WIDTH - 5, line_y)
 
             # توضیحات مشتری
-            pdf.set_font('Vazir', '', 9)
-            current_y = line_y + 3  # موقعیت شروع توضیحات (پس از خط جداکننده)
+            pdf.set_font('Vazir', '', FONT_SIZE-4)
+            current_y = line_y + 0  # موقعیت شروع توضیحات (پس از خط جداکننده)
             
             # تقسیم متن به خطوط کوچک با wrap
-            desc_lines = wrap(card_data['description'], width=35)
+            desc_lines = wrap(card_data['description'], width=70)
             
             for line in desc_lines:
                 rtl_line = prepare_rtl_text(line)
-                pdf.set_xy(x + 4, current_y)
+                pdf.set_xy(x + 7, current_y)
                 pdf.multi_cell(w=CARD_WIDTH - 8, h=4.5, txt=rtl_line, align='R')
                 current_y += 4.5  # افزایش موقعیت y به اندازه ارتفاع خط
 
