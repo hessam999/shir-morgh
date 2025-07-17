@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--cards-per-page',
         type=int,
-        default=9, # مقدار پیش‌فرض را به 9 تغییر دادم چون چیدمان 3x3 در A4 زیباست
+        default=25, # مقدار پیش‌فرض را به 9 تغییر دادم چون چیدمان 3x3 در A4 زیباست
         help='تعداد کارت‌هایی که در هر صفحه PDF چاپ می‌شود. (پیش‌فرض: 9)'
     )
     args = parser.parse_args()
