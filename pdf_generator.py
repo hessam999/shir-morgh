@@ -7,7 +7,7 @@ from textwrap import wrap
 
 # --- ثابت‌های چیدمان (بر حسب میلی‌متر) ---
 A4_WIDTH, A4_HEIGHT = 210, 297
-CARD_WIDTH, CARD_HEIGHT = 37, 53
+CARD_WIDTH, CARD_HEIGHT = 38, 50
 IMAGE_ASSET_WIDTH, IMAGE_ASSET_HEIGHT = 22, 22 # اندازه تصویر روی کارت
 FONT_PATH = "assets/font/Vazirmatn-Regular.ttf"
 FONT_SIZE = 10
@@ -103,12 +103,12 @@ def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=16)
             current_y = line_y + 0  # موقعیت شروع توضیحات (پس از خط جداکننده)
             
             # تقسیم متن به خطوط کوچک با wrap
-            desc_lines = wrap(card_data['description'], width=70)
+            desc_lines = wrap(card_data['description'], width=25)
             
             for line in desc_lines:
                 rtl_line = prepare_rtl_text(line)
-                pdf.set_xy(x + 7, current_y)
-                pdf.multi_cell(w=CARD_WIDTH - 8, h=4.5, txt=rtl_line, align='R')
+                pdf.set_xy(x + 0, current_y)
+                pdf.multi_cell(w=CARD_WIDTH - 4, h=4.5, txt=rtl_line, align='R')
                 current_y += 4.5  # افزایش موقعیت y به اندازه ارتفاع خط
 
         pdf.card_count_on_page += 1
