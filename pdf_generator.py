@@ -103,7 +103,7 @@ def generate_pdf(word_cards, customer_cards, output_filename, cards_per_page=16,
         # 2. رسم نوار مایل بر اساس نوع کارت
         if card_type == 'word':
             draw_diagonal_stripe(pdf, x, y, CARD_WIDTH, CARD_HEIGHT, STRIPE_WIDTH, 
-                               prepare_rtl_text("کالا"), color=(100, 150, 200))
+                               prepare_rtl_text("کلمه"), color=(100, 150, 200))
         elif card_type == 'customer':
             draw_diagonal_stripe(pdf, x, y, CARD_WIDTH, CARD_HEIGHT, STRIPE_WIDTH, 
                                prepare_rtl_text("مشتری"), color=(200, 100, 100))
